@@ -14,9 +14,20 @@ echo sss%id%
 echo .. Deleting Chrome Registry
 REG DELETE "HKCU\Software\Google\Chrome\NativeMessagingHosts\%id%" /f
 
+echo .. Deleting Chromium Registry
+REG DELETE "HKEY_CURRENT_USER\Software\Chromium\NativeMessagingHosts\%id%" /f
+
+echo .. Deleting Microsoft Edge Registry
+REG DELETE "HKEY_CURRENT_USER\Software\Microsoft\Edge\NativeMessagingHosts\%id%" /f
+
 echo .. Deleting Firefox Registry
-for %%f in ("%LocalAPPData%") do SET SHORT_PATH=%%~sf
 REG DELETE "HKCU\SOFTWARE\Mozilla\NativeMessagingHosts\%id%" /f
+
+echo .. Deleting Waterfox Registry
+REG DELETE "HKCU\SOFTWARE\Waterfox\NativeMessagingHosts\%id%" /f
+
+echo .. Deleting Thunderbird Registry
+REG DELETE "HKCU\SOFTWARE\Thunderbird\NativeMessagingHosts\%id%" /f
 
 echo .. Deleting %id%
 RMDIR /Q /S "%LocalAPPData%\%id%"
@@ -25,4 +36,3 @@ echo.
 echo ^>^>^> Native Client is removed ^<^<^<
 echo.
 pause
-

@@ -1,10 +1,9 @@
-/* globals require, process */
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var share = process.argv.filter(a => a.startsWith('--custom-dir=')).map(a => a.split('=')[1])[0] ||
+let share = process.argv.filter(a => a.startsWith('--custom-dir=')).map(a => a.split('=')[1])[0] ||
   path.resolve(process.env.HOME, '.config');
 if (share[0] === '~') {
   share = path.join(process.env.HOME, share.slice(1));
@@ -42,9 +41,9 @@ function exists(directory, callback) {
   one();
 }
 
-var {id, ids} = require('./config.js');
-var dir = path.join(share, id);
-var name = id;
+const {id, ids} = require('./config.js');
+const dir = path.join(share, id);
+const name = id;
 
 function manifest(root, type, callback) {
   console.log(' -> Creating a directory at', root);
@@ -79,9 +78,9 @@ function application(callback) {
   console.log(' -> Creating a directory at', dir);
   exists(dir, e => {
     if (e) {
-      console.log('\x1b[31m', `-> You dont have permission to use "${share}" directory.` ,'\x1b[0m');
-      console.log('\x1b[31m', '-> Use custom directory instead. Example:' ,'\x1b[0m');
-      console.log('\x1b[31m', '-> ./install.sh --custom-dir=~/' ,'\x1b[0m');
+      console.log('\x1b[31m', `-> You dont have permission to use "${share}" directory.`, '\x1b[0m');
+      console.log('\x1b[31m', '-> Use custom directory instead. Example:', '\x1b[0m');
+      console.log('\x1b[31m', '-> ./install.sh --custom-dir=~/', '\x1b[0m');
 
       throw e;
     }
@@ -107,61 +106,55 @@ function application(callback) {
   });
 }
 
-function chrome(callback) {
-  if (ids.chrome.length) {
-    const loc = path.join(
-      process.env.HOME,
-      'Library/Application Support/Google/Chrome/NativeMessagingHosts'
-    );
-    manifest(loc, 'chrome', callback);
-    console.error(' -> Chrome Browser is supported');
-  }
-  else {
-    callback();
-  }
+async function chrome() {
+  const run = p => new Promise(resolve => {
+    if (ids.chrome.length) {
+      const loc = path.join(process.env.HOME, p);
+      manifest(loc, 'chrome', resolve);
+    }
+    else {
+      resolve();
+    }
+  });
+
+  await run('Library/Application Support/Google/Chrome/NativeMessagingHosts');
+  console.error(' -> Chrome Browser is supported');
+  await run('Library/Application Support/Chromium/NativeMessagingHosts');
+  console.error(' -> Chromium Browser is supported');
+  await run('Library/Application Support/Vivaldi/NativeMessagingHosts');
+  console.error(' -> Vivaldi Browser is supported');
+  await run('Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts');
+  console.error(' -> Brave Browser is supported');
+  await run('Library/Application Support/Microsoft Edge/NativeMessagingHosts');
+  console.error(' -> Microsoft Edge Browser is supported');
 }
-function chromium(callback) {
-  if (ids.chrome.length) {
-    const loc = path.join(
-      process.env.HOME,
-      'Library/Application Support/Chromium/NativeMessagingHosts'
-    );
-    manifest(loc, 'chrome', callback);
-    console.error(' -> Chromium Browser is supported');
-  }
-  else {
-    callback();
-  }
+
+async function firefox() {
+  const run = p => new Promise(resolve => {
+    if (ids.firefox.length) {
+      const loc = path.join(process.env.HOME, p);
+      manifest(loc, 'firefox', resolve);
+    }
+    else {
+      resolve();
+    }
+  });
+
+  await run('Library/Application Support/Mozilla/NativeMessagingHosts');
+  console.error(' -> Firefox Browser is supported');
+  await run('Library/Application Support/Waterfox/NativeMessagingHosts');
+  console.error(' -> Waterfox Browser is supported');
+  await run('Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts');
+  console.error(' -> Tor Browser is supported');
+  await run('Library/Application Support/Thunderbird/NativeMessagingHosts');
+  console.error(' -> Thunderbird Email Client is supported');
 }
-function vivaldi(callback) {
-  if (ids.chrome.length) {
-    const loc = path.join(
-      process.env.HOME,
-      'Library/Application Support/Vivaldi/NativeMessagingHosts'
-    );
-    manifest(loc, 'chrome', callback);
-    console.error(' -> Vivaldi Browser is supported');
-  }
-  else {
-    callback();
-  }
-}
-function firefox(callback) {
-  if (ids.firefox.length) {
-    const loc = path.join(
-      process.env.HOME,
-      'Library/Application Support/Mozilla/NativeMessagingHosts'
-    );
-    manifest(loc, 'firefox', callback);
-    console.error(' -> Firefox Browser is supported');
-  }
-  else {
-    callback();
-  }
-}
-chrome(() => chromium(() => vivaldi(() => firefox(() => {
+
+(async () => {
+  await chrome();
+  await firefox();
   application(() => {
     console.error(' -> Native Host is installed in', dir);
     console.error('\n\n>>> Application is ready to use <<<\n\n');
   });
-}))));
+})();

@@ -1,10 +1,10 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-function exists (directory, callback) {
-  fs.stat(directory, (e) => {
+function exists(directory, callback) {
+  fs.stat(directory, e => {
 
     if (e && e.code === 'ENOENT') {
       fs.mkdir(directory, callback);
@@ -15,22 +15,38 @@ function exists (directory, callback) {
   });
 }
 
-var {id, ids} = require('./config.js');
-var dir = path.join(process.argv[2], id);
-var name = id;
+const {id, ids} = require('./config.js');
+const dir = path.join(process.argv[2], id);
+const name = id;
 
-var {exec} = require('child_process');
+const {exec} = require('child_process');
 
-console.log('.. Writting to Chrome Registry');
+console.log('.. Writing to Chrome Registry');
 console.log(`.. Key: HKCU\\Software\\Google\\Chrome\\NativeMessagingHosts\\${id}`);
 exec(`REG ADD "HKCU\\Software\\Google\\Chrome\\NativeMessagingHosts\\${id}" /ve /t REG_SZ /d "%LocalAPPData%\\${id}\\manifest-chrome.json" /f`);
 
-console.log(`.. Writting to Firefox Registry`);
+console.log('.. Writing to Chromium Registry');
+console.log(`.. Key: HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\${id}`);
+exec(`REG ADD "HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\${id}" /ve /t REG_SZ /d "%LocalAPPData%\\${id}\\manifest-chrome.json" /f`);
+
+console.log('.. Writing to Edge Registry');
+console.log(`.. Key: HKEY_CURRENT_USER\\Software\\Microsoft\\Edge\\NativeMessagingHosts\\${id}`);
+exec(`REG ADD "HKEY_CURRENT_USER\\Software\\Microsoft\\Edge\\NativeMessagingHosts\\${id}" /ve /t REG_SZ /d "%LocalAPPData%\\${id}\\manifest-chrome.json" /f`);
+
+console.log(`.. Writing to Firefox Registry`);
 console.log(`.. Key: HKCU\\SOFTWARE\\Mozilla\\NativeMessagingHosts\\${id}`);
 exec(`REG ADD "HKCU\\SOFTWARE\\Mozilla\\NativeMessagingHosts\\${id}" /ve /t REG_SZ /d "%LocalAPPData%\\${id}\\manifest-firefox.json" /f`);
 
-function manifest (type, callback) {
-  exists(dir, (e) => {
+console.log(`.. Writing to Waterfox Registry`);
+console.log(`.. Key: HKCU\\SOFTWARE\\Waterfox\\NativeMessagingHosts\\${id}`);
+exec(`REG ADD "HKCU\\SOFTWARE\\Waterfox\\NativeMessagingHosts\\${id}" /ve /t REG_SZ /d "%LocalAPPData%\\${id}\\manifest-firefox.json" /f`);
+
+console.log(`.. Writing to Thunderbird Registry`);
+console.log(`.. Key: HKCU\\SOFTWARE\\Thunderbird\\NativeMessagingHosts\\${id}`);
+exec(`REG ADD "HKCU\\SOFTWARE\\Thunderbird\\NativeMessagingHosts\\${id}" /ve /t REG_SZ /d "%LocalAPPData%\\${id}\\manifest-firefox.json" /f`);
+
+function manifest(type, callback) {
+  exists(dir, e => {
     if (e) {
       throw e;
     }
@@ -47,7 +63,7 @@ function manifest (type, callback) {
   "path": "run.bat",
   "type": "stdio",
   ${origins}
-}`, (e) => {
+}`, e => {
       if (e) {
         throw e;
       }
@@ -55,8 +71,8 @@ function manifest (type, callback) {
     });
   });
 }
-function application (callback) {
-  fs.writeFile(path.join(dir, 'run.bat'), `@echo off\n\n"%~dp0node.exe" "%~dp0host.js"`, (e) => {
+function application(callback) {
+  fs.writeFile(path.join(dir, 'run.bat'), `@echo off\n\n"%~dp0node.exe" "%~dp0host.js"`, e => {
     if (e) {
       throw e;
     }
@@ -65,12 +81,13 @@ function application (callback) {
     fs.createReadStream('messaging.js').pipe(fs.createWriteStream(path.join(dir, 'messaging.js')));
     try {
       fs.createReadStream(process.argv[0]).pipe(fs.createWriteStream(path.join(dir, 'node.exe')));
-    } catch (e) {}
+    }
+    catch (e) {}
     callback();
   });
 }
 
-function chrome (callback) {
+function chrome(callback) {
   if (ids.chrome.length) {
     manifest('chrome', callback);
     console.error('.. Chrome Browser is supported');
@@ -79,7 +96,7 @@ function chrome (callback) {
     callback();
   }
 }
-function firefox (callback) {
+function firefox(callback) {
   if (ids.firefox.length) {
     manifest('firefox', callback);
     console.error('.. Firefox Browser is supported');

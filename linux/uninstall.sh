@@ -22,14 +22,26 @@ fi
 echo "Native Client id is \"${id}\""
 echo
 
-echo " .. Removing manifest file for Google Chrome"
-rm ~/.config/google-chrome/NativeMessagingHosts/${id}.json
-echo " .. Removing manifest file for Chromium"
-rm ~/.config/chromium/NativeMessagingHosts/${id}.json
-echo " .. Removing manifest file for Mozilla Firefox"
-rm ~/.mozilla/native-messaging-hosts/${id}.json
-echo " .. Removing executable"
-[ -n "$id" ] && rm -r ~/.config/${id}
+echo " -> Removing manifest file for Google Chrome"
+rm -f ~/.config/google-chrome/NativeMessagingHosts/${id}.json
+echo " -> Removing manifest file for Chromium"
+rm -f ~/.config/chromium/NativeMessagingHosts/${id}.json
+echo " -> Removing manifest file for Vivaldi"
+rm -f ~/.config/vivaldi/NativeMessagingHosts/${id}.json
+echo " -> Removing manifest file for Brave"
+rm -f ~/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/${id}.json
+echo " -> Removing manifest file for Microsoft Edge"
+rm -f ~/.config/microsoftedge/NativeMessagingHosts/${id}.json
+echo " -> Removing manifest file for Mozilla Firefox"
+rm -f ~/.mozilla/native-messaging-hosts/${id}.json
+echo " -> Removing manifest file for Waterfox"
+rm -f ~/.waterfox/native-messaging-hosts/${id}.json
+echo " -> Removing manifest file for Tor"
+rm -f ~/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/${id}.json
+echo " -> Removing manifest file for Thunderbird"
+rm -f ~/.thunderbird/native-messaging-hosts/${id}.json
+echo " -> Removing executable"
+[ -n "$id" ] && rm -f -r ~/.config/${id}
 
 echo
 echo ">>> Native Client is removed <<<".

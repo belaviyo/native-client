@@ -1,7 +1,6 @@
-/* globals require, process */
 'use strict';
 
-var config = require('./config.js');
+const config = require('./config.js');
 
 // closing node when parent process is killed
 process.stdin.resume();
@@ -62,7 +61,7 @@ function observe(request, push, done) {
   }
 }
 /* message passing */
-var nativeMessage = require('./messaging');
+const nativeMessage = require('./messaging');
 process.stdin
   .pipe(new nativeMessage.Input())
   .pipe(new nativeMessage.Transform(observe))
