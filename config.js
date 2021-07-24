@@ -1,39 +1,36 @@
 'use strict';
 
 exports.id = 'com.add0n.native_client';
-exports.version = '0.4.6';
+exports.version = '0.4.7';
 
 exports.ids = {
   chrome: [
     'hfckgfbhdacemicpjljhfbjmkiggeche', // Send to VLC (Chrome)
-    'hgadfjhoalnaidfdoilgeimnolhcodbc', // Send to VLC (Opera)
-    'jdemocppkpiaocccmmdjnpclehbajogd', // Send to MPC (Chrome)
-    'ngaohleapbfjleillajbginbiaokmncm', // Send to MPC (Opera)
-    'bnjifjcdaiecofdljgempabjecjdjpnm', // Send to MPlayer (Chrome)
-    'kalnbllmkdiidgakcakkoecaahkpakmj', // Send to MPlayer (Opera)
     'ijagoebbhgpklaaliglekagdjpigbcgm', // Download with IDM (Chrome)
-    'kajaikkhnmegmfnlifeklklaienhdekb', // Download with IDM (Opera)
-    'bihikkbcagnajdoncmjebpalfhecpjnb', // Download with IDM (Edge)
     'jlodlegnpjplclncjkgolcmdhjmlokna', // Download with FDM (Chrome)
-    'iidhcgjgmjodnfbghbgpdnhiajbmgcjo', // Download with FDM (Opera)
     'jfpmbokkdeapjommajdfmmheiiakdlgo', // Download with JDownloader (Chrome)
-    'jjbbcngfknmgdlekfofhaagmogeifbpc', // Download with JDownloader (Opera)
-    'ilonanfdcnaljoedndpfeflllibalflj', // Download with JDownloader (Edge)
     'hlbdmmifbcfpccdnoknhdfcifiglaihb', // Download with DAP (Chrome)
+    'eiejadjdcchfommckmikpcdnihljbpai', // Edit with Sublime Text (Chrome)
+    'gpmjpkmohjgaimfhebdjebpgdnpcadji', // Edit with Notepad++ (Chrome)
+
+    'hgadfjhoalnaidfdoilgeimnolhcodbc', // Send to VLC (Opera)
+    'ngaohleapbfjleillajbginbiaokmncm', // Send to MPC (Opera)
+    'kalnbllmkdiidgakcakkoecaahkpakmj', // Send to MPlayer (Opera)
+    'kajaikkhnmegmfnlifeklklaienhdekb', // Download with IDM (Opera)
+    'iidhcgjgmjodnfbghbgpdnhiajbmgcjo', // Download with FDM (Opera)
+    'jjbbcngfknmgdlekfofhaagmogeifbpc', // Download with JDownloader (Opera)
     'ekeecmblpnobdaijmfkcfcnofopooipg', // Download with DAP (Opera)
-    'jplcfomghgpjlgglocndioeceojhoika', // Download with Wget (Chrome)
+    'ilonanfdcnaljoedndpfeflllibalflj', // Download with JDownloader (Edge)
     'cmddfbnhpokddncdalabdlmdckcdmboh', // Download with Wget (Opera)
     'gecfhmlaldelfoeahjahajoooenmnlnd', // Download with FlashGet (Opera)
     'eadfknilcdakacgehgfoedimdghaedgi', // Download with FlashGet (Opera)
-    'jakcapoibgmjnghonlnjaooepccllgic', // Download with aria2 (Chrome)
-    'eiejadjdcchfommckmikpcdnihljbpai', // Edit with Sublime Text (Chrome)
     'odbhmaaphiednnbgfionolmpkdplpilc', // Edit with Sublime Text (Opera)
-    'gpmjpkmohjgaimfhebdjebpgdnpcadji', // Edit with Notepad++ (Chrome)
     'hfgnckeamhbkolmfeaieemklhejdcmai', // Edit with Notepad++ (Opera)
-    'jlghbmcdkfddnihedhlnmggjbfjcppng', // Send to MPV (Chrome)
     'dbghnkdojpkebjbddhhjfjgapoolnikh', // Send to MPV (Opera)
-    'nglfpmpeljnfooojieocihijkeokinno', // Edit with VIM (Chrome)
     'ajcbbbkgmbinpbkllamhphpgpgdabnhf', // Edit with VIM (Opera)
+
+    'iiekfngbnhgiecdjekibkbkaecdneobh', // Edit with Sublime Text (Edge)
+    'bihikkbcagnajdoncmjebpalfhecpjnb', // Download with IDM (Edge)
   ],
   firefox: [
     '{3e0ac434-26e0-4c03-b757-3078486800c3}', // Send to VLC
