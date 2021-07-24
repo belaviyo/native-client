@@ -4,8 +4,10 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  release:
-    types: [prereleased]
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,6 +30,17 @@ jobs:
           zip ../mac.zip -9 -r * -x "*.DS_Store"
           cd ../windows
           zip ../windows.zip -9 -r * -x "*.DS_Store"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: true
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
