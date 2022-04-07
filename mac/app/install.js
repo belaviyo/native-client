@@ -119,6 +119,8 @@ async function chrome() {
 
   await run('Library/Application Support/Google/Chrome/NativeMessagingHosts');
   console.error(' -> Chrome Browser is supported');
+  await run('Library/Application Support/Google/Chrome Dev/NativeMessagingHosts');
+  console.error(' -> Chrome Dev Browser is supported');
   await run('Library/Application Support/Chromium/NativeMessagingHosts');
   console.error(' -> Chromium Browser is supported');
   await run('Library/Application Support/Vivaldi/NativeMessagingHosts');
