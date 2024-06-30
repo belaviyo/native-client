@@ -6,7 +6,7 @@ exports.version = '0.4.7';
 exports.ids = {
   chrome: [
     'hfckgfbhdacemicpjljhfbjmkiggeche', // Send to VLC (Chrome)
-    'ijagoebbhgpklaaliglekagdjpigbcgm', // Download with IDM (Chrome)
+    'lgbipmmmnjifkiiikaffhceflifbmhib', // Download with IDM (Chrome)
     'jlodlegnpjplclncjkgolcmdhjmlokna', // Download with FDM (Chrome)
     'jfpmbokkdeapjommajdfmmheiiakdlgo', // Download with JDownloader (Chrome)
     'hlbdmmifbcfpccdnoknhdfcifiglaihb', // Download with DAP (Chrome)
