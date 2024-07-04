@@ -24,6 +24,8 @@ echo
 
 echo " -> Removing manifest file for Google Chrome"
 rm -f ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts/${id}.json
+echo " -> Removing manifest file for Google Chrome Dev"
+rm -f ~/Library/Application\ Support/Google/Chrome\ Dev/NativeMessagingHosts/${id}.json
 echo " -> Removing manifest file for Chromium"
 rm -f ~/Library/Application\ Support/Chromium/NativeMessagingHosts/${id}.json
 echo " -> Removing manifest file for Vivaldi"
